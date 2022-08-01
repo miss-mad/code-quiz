@@ -1,16 +1,16 @@
 var questions = [
   {
-    questionOne: "Who invented JavaScript?",
+    question: "Who invented JavaScript?",
     answerChoices: ["Mickey Mouse", "Madonna", "Brandon Erlch", "Rhiannon"],
     answerCorrect: "Brandon Erlch",
   },
   {
-    questionTwo: "Which array method removes the first element from the array?",
+    question: "Which array method removes the first element from the array?",
     answerChoices: [".split", ".push", ".pop", ".shift"],
     answerCorrect: ".shift",
   },
   {
-    questionThree: "How do you call a function?",
+    question: "How do you call a function?",
     answerChoices: [
       "var call = function(event) {}",
       "console.log(function);",
@@ -21,15 +21,33 @@ var questions = [
   },
 ];
 
+var nav = document.querySelector(".nav");
 var highscores = document.querySelector(".highscores");
 var timer = document.querySelector(".timer");
+// var container = document.querySelector(".container");
 var start = document.getElementById("start");
 var quiz = document.getElementById("quiz");
+
+console.log(quiz);
+var questionNumber = 0;
 
 // quiz.append(questions[0]);
 
 var totalTime = 5;
 var isIncorrect = false;
+
+// document.setAttribute("class", "card-body")
+
+
+function buildQuestion(questionObject) {
+    var card = "";
+  var cardBody = 
+    `<div class="card-body"><h5 class="card-title">${questionObject.question}</h5></div>`;
+    card += cardBody;
+    return card;
+}
+
+function 
 
 function askQuestions() {
   if (start.addEventListener("click", countdownTimer) === true) {
@@ -78,11 +96,10 @@ function countdownTimer() {
 
 start.addEventListener("click", countdownTimer);
 
-// Function to create and append colorsplosion image
-// function viewHighscores() {
-//   timer.textContent = " ";
-//   var imgEl = document.createElement("img");
-//   imgEl.setAttribute("src", "images/image_1.jpg");
-//   mainEl.appendChild(imgEl);
-
-// }
+// Function to view scoreboard
+function viewHighscores() {
+  highscores.textContent = "";
+  highscores = document.createAttribute("");
+  highscores.setAttribute("", "");
+  nav.appendChild(highscores);
+}
