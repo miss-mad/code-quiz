@@ -1,32 +1,9 @@
-var questions = [
-  {
-    question: "Who invented JavaScript?",
-    answerChoices: ["Mickey Mouse", "Madonna", "Brandon Erlch", "Rhiannon"],
-    answerCorrect: "Brandon Erlch",
-  },
-  {
-    question: "Which array method removes the first element from the array?",
-    answerChoices: [".split", ".push", ".pop", ".shift"],
-    answerCorrect: ".shift",
-  },
-  {
-    question: "How do you call a function?",
-    answerChoices: [
-      "var call = function(event) {}",
-      "console.log(function);",
-      "function name + ();",
-      "Pick up the phone",
-    ],
-    answerCorrect: "function name + ();",
-  },
-];
-
 var nav = document.querySelector(".nav");
-var highscores = document.querySelector(".highscores");
-var timer = document.querySelector(".timer");
-// var container = document.querySelector(".container");
-var start = document.getElementById("start");
+var next = document.getElementById("next");
 var quiz = document.getElementById("quiz");
+var start = document.getElementById("start");
+var timer = document.querySelector(".timer");
+var highscores = document.querySelector(".highscores");
 
 console.log(quiz);
 var questionNumber = 0;
@@ -38,18 +15,39 @@ var isIncorrect = false;
 
 // document.setAttribute("class", "card-body")
 
-
 function buildQuestion(questionObject) {
-    var card = "";
-  var cardBody = 
-    `<div class="card-body"><h5 class="card-title">${questionObject.question}</h5></div>`;
-    card += cardBody;
-    return card;
+  var card = document.createElement("div");
+  card.setAttribute("class", "card-body");
+
+  var questionTitle = document.createElement("h3");
+  questionTitle.append(questionObject.question);
+
+  var olElement = document.createElement("ol");
+  olElement.setAttribute("type", "a");
+
+  questionObject.choices.forEach((choice) => {
+    var list = document.createElement("li");
+    list.append(choice);
+    olElement.append(list);
+  });
+
+  card.appendChild(questionTitle);
+  card.appendChild(olElement);
+
+  console.log(card);
+
+  return card;
 }
 
-function controlStartQuiz () {
-    countdownTimer();
-    var questionCard = buildQuestion(questions[0]);
+function renderQuestionToDOM(htmlString) {
+  console.log(htmlString);
+  quiz.appendChild(htmlString);
+}
+
+function controlStartQuiz() {
+  countdownTimer();
+  var questionCard = buildQuestion(questions[0]);
+  renderQuestionToDOM(questionCard);
 }
 
 // function askQuestions() {
