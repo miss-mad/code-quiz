@@ -2,7 +2,7 @@ var totalTime = 20;
 var questionNumber = 0;
 var isIncorrect = false;
 var score = 0;
-var gameOver = false
+var gameOver = false;
 var questions = [
   {
     question: "Who invented JavaScript?",
@@ -106,10 +106,54 @@ function renderQuestionToDOM(htmlString) {
 //   }
 // }
 
+function handleQuizOver() {
+  /*
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Initials Here">
+  <button class="btn btn-outline-secondary" type="button" id="submit">Submit</button>
+</div>
+
+*/
+
+  quiz.innerHTML = "";
+
+  var inputGroup = document.createElement("div");
+  inputGroup.setAttribute("class", "input-group mb-3");
+
+  var input = document.createElement("input");
+  input.setAttribute("type", "text");
+  input.setAttribute("placeholder", "Initials here");
+  input.setAttribute("id", "initials");
+
+  var initialsBtn = document.createElement("button");
+  initialsBtn.setAttribute("class", "btn btn-outline-secondary");
+  initialsBtn.setAttribute("type", "button");
+  initialsBtn.setAttribute("id", "submit");
+  initialsBtn.textContent = "Submit initials";
+
+  inputGroup.append(input);
+  inputGroup.append(initialsBtn);
+
+  quiz.append(inputGroup);
+
+  var submitBtn = document.getElementById("submit");
+  submitBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    var initials = document.querySelector("#initials").value;
+
+    console.log("initials", initials);
+    localStorage.setItem("initials", initials);
+    localStorage.setItem("score", score);
+  });
+
+  console.log(submitBtn);
+}
+
+
 function countdownTimer() {
   var countdownFunction = setInterval(function () {
     if (isIncorrect) {
-      totalTime - 4;
+      totalTime -= 4;
       isIncorrect = false;
     }
     totalTime--;
@@ -122,8 +166,7 @@ function countdownTimer() {
     if (totalTime <= 0 || gameOver) {
       clearInterval(countdownFunction);
       timer.textContent = "Time is up!";
-      quiz.innerHTML = "";
-      quiz.append(initialsElement)
+      handleQuizOver();
     }
   }, 1000);
 }
@@ -145,12 +188,18 @@ function checkAnswer(answer) {
   //  answer is wrong and set isIncorrect to TRUE
   //}
 
-  answer = parseInt(answer)
+  answer = parseInt(answer);
 
   console.log("answer", answer);
   console.log("questions[questionNumber]", questions[questionNumber]);
-  console.log("questions[questionNumber].answer", questions[questionNumber].answer);
-  console.log("questions[questionNumber].answer === answer", questions[questionNumber].answer === answer);
+  console.log(
+    "questions[questionNumber].answer",
+    questions[questionNumber].answer
+  );
+  console.log(
+    "questions[questionNumber].answer === answer",
+    questions[questionNumber].answer === answer
+  );
 
   if (questions[questionNumber].answer === answer) {
     score++;
@@ -168,7 +217,7 @@ function nextQuestion(event) {
 
   if (questionNumber >= questions.length) {
     console.log("game over");
-    gameOver = true
+    gameOver = true;
 
     // game over
   } else {
