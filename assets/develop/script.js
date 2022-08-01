@@ -1,6 +1,8 @@
-var totalTime = 5;
+var totalTime = 20;
 var questionNumber = 0;
 var isIncorrect = false;
+var score = 0;
+var gameOver = false
 var questions = [
   {
     question: "Who invented JavaScript?",
@@ -30,6 +32,7 @@ var next = document.getElementById("next");
 var quiz = document.getElementById("quiz");
 var start = document.getElementById("start");
 var timer = document.querySelector(".timer");
+var scoreElement = document.getElementById("score");
 var highscores = document.querySelector(".highscores");
 
 function buildQuestion(questionObject) {
@@ -42,7 +45,7 @@ function buildQuestion(questionObject) {
   var olElement = document.createElement("ol");
   olElement.setAttribute("type", "a");
 
-  questionObject.choices.forEach((choice, index) => {
+  questionObject.choices.forEach(function (choice, index) {
     var list = document.createElement("li");
     var btn = document.createElement("button");
     btn.setAttribute("class", "btn btn-secondary");
@@ -65,12 +68,16 @@ function buildQuestion(questionObject) {
 }
 
 function renderQuestionToDOM(htmlString) {
-  console.log(htmlString);
   quiz.innerHTML = "";
   quiz.appendChild(htmlString);
 
-  var choiceBtn = document.querySelector(".btn-secondary");
-  choiceBtn.addEventListener("click", nextQuestion);
+  var choiceBtn = document.querySelectorAll(".btn-secondary");
+
+  console.log(choiceBtn);
+
+  choiceBtn.forEach(function (node) {
+    node.addEventListener("click", nextQuestion);
+  });
 }
 
 // function askQuestions() {
@@ -110,10 +117,13 @@ function countdownTimer() {
     // if (totalTime >= 0) {
     //   console.log(totalTime);
     // }
+    console.log("score: ", score);
 
-    if (totalTime <= 0) {
+    if (totalTime <= 0 || gameOver) {
       clearInterval(countdownFunction);
       timer.textContent = "Time is up!";
+      quiz.innerHTML = "";
+      quiz.append(initialsElement)
     }
   }, 1000);
 }
@@ -126,31 +136,45 @@ function viewHighscores() {
   nav.appendChild(highscores);
 }
 
+function checkAnswer(answer) {
+  // checks answer using questionNumber value
+  // if (questions[questionNumber].answer === answer) {
+  //    answer is right
+  //    add +1 to score
+  //} else {
+  //  answer is wrong and set isIncorrect to TRUE
+  //}
+
+  answer = parseInt(answer)
+
+  console.log("answer", answer);
+  console.log("questions[questionNumber]", questions[questionNumber]);
+  console.log("questions[questionNumber].answer", questions[questionNumber].answer);
+  console.log("questions[questionNumber].answer === answer", questions[questionNumber].answer === answer);
+
+  if (questions[questionNumber].answer === answer) {
+    score++;
+  } else {
+    isIncorrect = true;
+  }
+}
+
 function nextQuestion(event) {
-  //
-  // 
-  // check answer
-  // if wrong then deduct time
-  // else add +1 to score
-  
-  
-  
-  
-  
+  var answer = event.target.value;
+  checkAnswer(answer);
   questionNumber += 1;
 
   console.log(event.target.value);
 
   if (questionNumber >= questions.length) {
     console.log("game over");
+    gameOver = true
+
     // game over
   } else {
     var nextQuestion = buildQuestion(questions[questionNumber]);
     renderQuestionToDOM(nextQuestion);
   }
-
-
-
 }
 
 function controlStartQuiz() {
@@ -160,4 +184,3 @@ function controlStartQuiz() {
 }
 
 start.addEventListener("click", controlStartQuiz);
-// next.addEventListener("click", nextQuestion);
