@@ -4,14 +4,13 @@
   box-sizing: border-box;
 }
 
-body {
+/* body {
   background-color: bisque;
   font-family: calibri;
 }
 
 header {
   display: flex;
-  /* justify-content: space-between; */
   font-size: 24px;
 }
 
@@ -38,13 +37,13 @@ button {
   align-items: center;
   flex-direction: column;
   width: 80%;
-}
+} */
 
 /* #start {
     font-weight: bold;
     color:rgba(181, 48, 48, 0.816);
 } */
-
+/* 
 .card-body{
     margin-left: 32px;
-}
+} */
