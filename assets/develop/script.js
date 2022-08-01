@@ -1,3 +1,4 @@
+// ~ ~ ~ Initialized variables (including quiz questions) ~ ~ ~
 var score = 0;
 var totalTime = 20;
 var quizOver = false;
@@ -74,7 +75,7 @@ function buildQuestion(questionObject) {
   return card;
 }
 
-// Function that displays the question to the DOM (to the user) and also listens for the queue for the next question
+// Function that displays the question to the DOM (to the user) and also listens for the queue for the next question (when user clicks answer)
 function renderQuestionToDOM(htmlString) {
   quiz.innerHTML = "";
   quiz.appendChild(htmlString);
@@ -88,7 +89,7 @@ function renderQuestionToDOM(htmlString) {
   });
 }
 
-// Function to countdown the timer and subject extra time if the answer was incorrect
+// Function to countdown the timer and subtract extra time if the answer was incorrect
 function countdownTimer() {
   var countdownFunction = setInterval(function () {
     if (isIncorrect) {
@@ -152,7 +153,7 @@ function controlStartQuiz() {
   renderQuestionToDOM(questionCard);
 }
 
-// Function to handle the quiz being over, ask for user's initials, and save score
+// Function to handle the quiz being over, ask for user's initials, and save score to local storage
 function handleQuizOver() {
   quiz.innerHTML = "";
 
@@ -182,7 +183,6 @@ function handleQuizOver() {
 
     console.log("initials", initials);
 
-    // [{"initials":"pa","score":0}, {"initials":"pa","score":0}]
     var retrieveScores = localStorage.getItem("localScores");
     console.log("parse: ", JSON.parse(retrieveScores));
     retrieveScores = JSON.parse(retrieveScores);
@@ -198,7 +198,7 @@ function handleQuizOver() {
   });
 }
 
-// Function to view scoreboard
+// Function to view score current and recent scores
 function viewScores() {
   scores.textContent = "";
 

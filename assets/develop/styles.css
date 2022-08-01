@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+
+/* Aside from this universal style, all others styles on the page are with Bootstrap */
+
+
 /* body {
   background-color: bisque;
   font-family: calibri;
