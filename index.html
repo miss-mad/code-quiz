@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -17,25 +16,29 @@
   </head>
 
   <body>
-
     <header>
       <nav>
         <div>
-          <h4>View Highscores</h4>
+          <h4 class="highscores">View Highscores</h4>
         </div>
         <div>
-          <h4>Timer</h4>
+          <h4 class="timer"></h4>
         </div>
       </nav>
     </header>
 
     <main>
-      <h1>Code Quiz!</h1>
-      <p>Test your knowledge of JavaScript fundamentals with this fun quiz by answering all questions within the time limit. Beware that wrong answers will make the time pass more quickly!</p>
-      <button>START</button>
+      <div class="quiz">
+        <h1 class="title">Code Quiz!</h1>
+        <p>
+          Test your knowledge of JavaScript fundamentals with this fun quiz by
+          answering all questions within the time limit. Beware that wrong
+          answers will make the time pass more quickly!
+        </p>
+        <button id="start">START</button>
+      </div>
     </main>
 
     <script src="./assets/develop/script.js"></script>
   </body>
-
 </html>
