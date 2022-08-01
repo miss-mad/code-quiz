@@ -47,33 +47,36 @@ function buildQuestion(questionObject) {
     return card;
 }
 
-function 
-
-function askQuestions() {
-  if (start.addEventListener("click", countdownTimer) === true) {
-    questions.textContent = questions[0];
-    if (answerChoices === "Brandon Erlch") {
-      quiz.textContent = "Correct!";
-    } else {
-      isIncorrect;
-      quiz.textContent = "Incorrect! Minus 5 seconds";
-    }
-    questions.textContent = questions[1];
-    if (answerChoices === ".shift") {
-      quiz.textContent = "Correct!";
-    } else {
-      isIncorrect;
-      quiz.textContent = "Incorrect! Minus 5 seconds";
-    }
-    questions.textContent = questions[2];
-    if (answerChoices === "function name + ();") {
-      quiz.textContent = "Correct!";
-    } else {
-      isIncorrect;
-      quiz.textContent = "Incorrect! Minus 5 seconds";
-    }
-  }
+function controlStartQuiz () {
+    countdownTimer();
+    var questionCard = buildQuestion(questions[0]);
 }
+
+// function askQuestions() {
+//   if (start.addEventListener("click", countdownTimer) === true) {
+//     questions.textContent = questions[0];
+//     if (answerChoices === "Brandon Erlch") {
+//       quiz.textContent = "Correct!";
+//     } else {
+//       isIncorrect;
+//       quiz.textContent = "Incorrect! Minus 5 seconds";
+//     }
+//     questions.textContent = questions[1];
+//     if (answerChoices === ".shift") {
+//       quiz.textContent = "Correct!";
+//     } else {
+//       isIncorrect;
+//       quiz.textContent = "Incorrect! Minus 5 seconds";
+//     }
+//     questions.textContent = questions[2];
+//     if (answerChoices === "function name + ();") {
+//       quiz.textContent = "Correct!";
+//     } else {
+//       isIncorrect;
+//       quiz.textContent = "Incorrect! Minus 5 seconds";
+//     }
+//   }
+// }
 
 function countdownTimer() {
   var countdownFunction = setInterval(function () {
@@ -94,7 +97,7 @@ function countdownTimer() {
   }, 1000);
 }
 
-start.addEventListener("click", countdownTimer);
+start.addEventListener("click", controlStartQuiz);
 
 // Function to view scoreboard
 function viewHighscores() {
