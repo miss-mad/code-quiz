@@ -1,13 +1,19 @@
+var score = 0;
 var totalTime = 20;
+var quizOver = false;
 var questionNumber = 0;
 var isIncorrect = false;
-var score = 0;
-var gameOver = false;
+var localScores = [];
 var questions = [
   {
     question: "Who invented JavaScript?",
     answer: 2,
-    choices: ["Mickey Mouse", "Madonna", "Brandon Erlch", "Rhiannon"],
+    choices: [
+      "Yukihiro Matsumoto",
+      "Tim Berners-Lee",
+      "Brendan Eich",
+      "Guido van Rossum",
+    ],
   },
   {
     question: "Which array method removes the first element from the array?",
@@ -26,15 +32,16 @@ var questions = [
   },
 ];
 
-// ~ ~ ~ ~  Selectors ~ ~ ~ ~
+// ~ ~ ~ Attribute Selector Variables ~ ~ ~
 var nav = document.querySelector(".nav");
 var next = document.getElementById("next");
 var quiz = document.getElementById("quiz");
 var start = document.getElementById("start");
 var timer = document.querySelector(".timer");
+var scores = document.querySelector(".scores");
 var scoreElement = document.getElementById("score");
-var highscores = document.querySelector(".highscores");
 
+// Function to build the quiz question by creating question cards, adding the question title, and appending each answer choice in a list below question title
 function buildQuestion(questionObject) {
   var card = document.createElement("div");
   card.setAttribute("class", "card-body");
@@ -67,6 +74,7 @@ function buildQuestion(questionObject) {
   return card;
 }
 
+// Function that displays the question to the DOM (to the user) and also listens for the queue for the next question
 function renderQuestionToDOM(htmlString) {
   quiz.innerHTML = "";
   quiz.appendChild(htmlString);
@@ -80,41 +88,72 @@ function renderQuestionToDOM(htmlString) {
   });
 }
 
-// function askQuestions() {
-//   if (start.addEventListener("click", countdownTimer) === true) {
-//     questions.textContent = questions[0];
-//     if (answerChoices === "Brandon Erlch") {
-//       quiz.textContent = "Correct!";
-//     } else {
-//       isIncorrect;
-//       quiz.textContent = "Incorrect! Minus 5 seconds";
-//     }
-//     questions.textContent = questions[1];
-//     if (answerChoices === ".shift") {
-//       quiz.textContent = "Correct!";
-//     } else {
-//       isIncorrect;
-//       quiz.textContent = "Incorrect! Minus 5 seconds";
-//     }
-//     questions.textContent = questions[2];
-//     if (answerChoices === "function name + ();") {
-//       quiz.textContent = "Correct!";
-//     } else {
-//       isIncorrect;
-//       quiz.textContent = "Incorrect! Minus 5 seconds";
-//     }
-//   }
-// }
+// Function to countdown the timer and subject extra time if the answer was incorrect
+function countdownTimer() {
+  var countdownFunction = setInterval(function () {
+    if (isIncorrect) {
+      totalTime -= 4;
+      isIncorrect = false;
+    }
+    totalTime--;
+    timer.textContent = "Time: " + totalTime;
 
+    if (totalTime <= 0 || quizOver) {
+      clearInterval(countdownFunction);
+      timer.textContent = "Time is up!";
+      handleQuizOver();
+    }
+  }, 1000);
+}
+
+// Function to check user's answer to quiz questions
+function checkAnswer(answer) {
+  answer = parseInt(answer);
+
+  console.log("answer", answer);
+  console.log("questions[questionNumber]", questions[questionNumber]);
+  console.log(
+    "questions[questionNumber].answer",
+    questions[questionNumber].answer
+  );
+  console.log(
+    "questions[questionNumber].answer === answer",
+    questions[questionNumber].answer === answer
+  );
+
+  if (questions[questionNumber].answer === answer) {
+    score++;
+  } else {
+    isIncorrect = true;
+  }
+}
+
+// Function to go to next question once user answers present question
+function nextQuestion(event) {
+  var answer = event.target.value;
+  checkAnswer(answer);
+  questionNumber += 1;
+
+  console.log(event.target.value);
+
+  if (questionNumber >= questions.length) {
+    console.log("quiz over");
+    quizOver = true;
+  } else {
+    var nextQuestion = buildQuestion(questions[questionNumber]);
+    renderQuestionToDOM(nextQuestion);
+  }
+}
+
+// Function to control the start of the quiz
+function controlStartQuiz() {
+  countdownTimer();
+  var questionCard = buildQuestion(questions[questionNumber]);
+  renderQuestionToDOM(questionCard);
+}
+
+// Function to handle the quiz being over, ask for user's initials, and save score
 function handleQuizOver() {
-  /*
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Initials Here">
-  <button class="btn btn-outline-secondary" type="button" id="submit">Submit</button>
-</div>
-
-*/
-
   quiz.innerHTML = "";
 
   var inputGroup = document.createElement("div");
@@ -137,99 +176,42 @@ function handleQuizOver() {
   quiz.append(inputGroup);
 
   var submitBtn = document.getElementById("submit");
-  submitBtn.addEventListener("click", function(event) {
+  submitBtn.addEventListener("click", function (event) {
     event.preventDefault();
     var initials = document.querySelector("#initials").value;
 
     console.log("initials", initials);
-    localStorage.setItem("initials", initials);
-    localStorage.setItem("score", score);
+
+    // [{"initials":"pa","score":0}, {"initials":"pa","score":0}]
+    var retrieveScores = localStorage.getItem("localScores");
+    console.log("parse: ", JSON.parse(retrieveScores));
+    retrieveScores = JSON.parse(retrieveScores);
+
+    if (typeof retrieveScores === "object") {
+      localScores = [...retrieveScores];
+    }
+
+    localScores.push({ initials, score });
+    localStorage.setItem("localScores", JSON.stringify(localScores));
+
+    viewScores();
   });
-
-  console.log(submitBtn);
-}
-
-
-function countdownTimer() {
-  var countdownFunction = setInterval(function () {
-    if (isIncorrect) {
-      totalTime -= 4;
-      isIncorrect = false;
-    }
-    totalTime--;
-    timer.textContent = "Time: " + totalTime;
-    // if (totalTime >= 0) {
-    //   console.log(totalTime);
-    // }
-    console.log("score: ", score);
-
-    if (totalTime <= 0 || gameOver) {
-      clearInterval(countdownFunction);
-      timer.textContent = "Time is up!";
-      handleQuizOver();
-    }
-  }, 1000);
 }
 
 // Function to view scoreboard
-function viewHighscores() {
-  highscores.textContent = "";
-  highscores = document.createAttribute("");
-  highscores.setAttribute("", "");
-  nav.appendChild(highscores);
+function viewScores() {
+  scores.textContent = "";
+
+  var retrieveScores = localStorage.getItem("localScores");
+  console.log("parse: ", JSON.parse(retrieveScores));
+  retrieveScores = JSON.parse(retrieveScores);
+
+  retrieveScores.forEach((item) => {
+    var div = document.createElement("div");
+    div.append(`Initials: ${item.initials} | Score: ${item.score}`);
+    scores.append(div);
+  });
 }
 
-function checkAnswer(answer) {
-  // checks answer using questionNumber value
-  // if (questions[questionNumber].answer === answer) {
-  //    answer is right
-  //    add +1 to score
-  //} else {
-  //  answer is wrong and set isIncorrect to TRUE
-  //}
-
-  answer = parseInt(answer);
-
-  console.log("answer", answer);
-  console.log("questions[questionNumber]", questions[questionNumber]);
-  console.log(
-    "questions[questionNumber].answer",
-    questions[questionNumber].answer
-  );
-  console.log(
-    "questions[questionNumber].answer === answer",
-    questions[questionNumber].answer === answer
-  );
-
-  if (questions[questionNumber].answer === answer) {
-    score++;
-  } else {
-    isIncorrect = true;
-  }
-}
-
-function nextQuestion(event) {
-  var answer = event.target.value;
-  checkAnswer(answer);
-  questionNumber += 1;
-
-  console.log(event.target.value);
-
-  if (questionNumber >= questions.length) {
-    console.log("game over");
-    gameOver = true;
-
-    // game over
-  } else {
-    var nextQuestion = buildQuestion(questions[questionNumber]);
-    renderQuestionToDOM(nextQuestion);
-  }
-}
-
-function controlStartQuiz() {
-  countdownTimer();
-  var questionCard = buildQuestion(questions[questionNumber]);
-  renderQuestionToDOM(questionCard);
-}
-
+// Click event listener to start the quiz and the timer!
 start.addEventListener("click", controlStartQuiz);
