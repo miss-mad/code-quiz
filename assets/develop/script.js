@@ -1,19 +1,36 @@
+var totalTime = 5;
+var questionNumber = 0;
+var isIncorrect = false;
+var questions = [
+  {
+    question: "Who invented JavaScript?",
+    answer: "Brandon Erlch",
+    choices: ["Mickey Mouse", "Madonna", "Brandon Erlch", "Rhiannon"],
+  },
+  {
+    question: "Which array method removes the first element from the array?",
+    answer: ".shift",
+    choices: [".split", ".push", ".pop", ".shift"],
+  },
+  {
+    question: "How do you call a function?",
+    answer: "function name + ();",
+    choices: [
+      "var call = function(event) {}",
+      "console.log(function);",
+      "function name + ();",
+      "Pick up the phone",
+    ],
+  },
+];
+
+// ~ ~ ~ ~  Selectors ~ ~ ~ ~
 var nav = document.querySelector(".nav");
 var next = document.getElementById("next");
 var quiz = document.getElementById("quiz");
 var start = document.getElementById("start");
 var timer = document.querySelector(".timer");
 var highscores = document.querySelector(".highscores");
-
-console.log(quiz);
-var questionNumber = 0;
-
-// quiz.append(questions[0]);
-
-var totalTime = 5;
-var isIncorrect = false;
-
-// document.setAttribute("class", "card-body")
 
 function buildQuestion(questionObject) {
   var card = document.createElement("div");
@@ -42,12 +59,6 @@ function buildQuestion(questionObject) {
 function renderQuestionToDOM(htmlString) {
   console.log(htmlString);
   quiz.appendChild(htmlString);
-}
-
-function controlStartQuiz() {
-  countdownTimer();
-  var questionCard = buildQuestion(questions[0]);
-  renderQuestionToDOM(questionCard);
 }
 
 // function askQuestions() {
@@ -95,8 +106,6 @@ function countdownTimer() {
   }, 1000);
 }
 
-start.addEventListener("click", controlStartQuiz);
-
 // Function to view scoreboard
 function viewHighscores() {
   highscores.textContent = "";
@@ -104,3 +113,12 @@ function viewHighscores() {
   highscores.setAttribute("", "");
   nav.appendChild(highscores);
 }
+
+function controlStartQuiz() {
+  countdownTimer();
+  var questionCard = buildQuestion(questions[0]);
+  renderQuestionToDOM(questionCard);
+}
+
+start.addEventListener("click", controlStartQuiz);
+next.addEventListener("click", nextQuestion);
