@@ -4,17 +4,17 @@ var isIncorrect = false;
 var questions = [
   {
     question: "Who invented JavaScript?",
-    answer: "Brandon Erlch",
+    answer: 2,
     choices: ["Mickey Mouse", "Madonna", "Brandon Erlch", "Rhiannon"],
   },
   {
     question: "Which array method removes the first element from the array?",
-    answer: ".shift",
+    answer: 3,
     choices: [".split", ".push", ".pop", ".shift"],
   },
   {
     question: "How do you call a function?",
-    answer: "function name + ();",
+    answer: 2,
     choices: [
       "var call = function(event) {}",
       "console.log(function);",
@@ -42,9 +42,17 @@ function buildQuestion(questionObject) {
   var olElement = document.createElement("ol");
   olElement.setAttribute("type", "a");
 
-  questionObject.choices.forEach((choice) => {
+  questionObject.choices.forEach((choice, index) => {
     var list = document.createElement("li");
-    list.append(choice);
+    var btn = document.createElement("button");
+    btn.setAttribute("class", "btn btn-secondary");
+    btn.setAttribute("value", index);
+    list.setAttribute("class", "m-2");
+
+    btn.append(choice);
+
+    list.append(btn);
+
     olElement.append(list);
   });
 
@@ -58,7 +66,11 @@ function buildQuestion(questionObject) {
 
 function renderQuestionToDOM(htmlString) {
   console.log(htmlString);
+  quiz.innerHTML = "";
   quiz.appendChild(htmlString);
+
+  var choiceBtn = document.querySelector(".btn-secondary");
+  choiceBtn.addEventListener("click", nextQuestion);
 }
 
 // function askQuestions() {
@@ -95,11 +107,11 @@ function countdownTimer() {
     }
     totalTime--;
     timer.textContent = "Time: " + totalTime;
-    if (totalTime >= 0) {
-      console.log(totalTime);
-    }
+    // if (totalTime >= 0) {
+    //   console.log(totalTime);
+    // }
 
-    if (totalTime === 0) {
+    if (totalTime <= 0) {
       clearInterval(countdownFunction);
       timer.textContent = "Time is up!";
     }
@@ -114,11 +126,38 @@ function viewHighscores() {
   nav.appendChild(highscores);
 }
 
+function nextQuestion(event) {
+  //
+  // 
+  // check answer
+  // if wrong then deduct time
+  // else add +1 to score
+  
+  
+  
+  
+  
+  questionNumber += 1;
+
+  console.log(event.target.value);
+
+  if (questionNumber >= questions.length) {
+    console.log("game over");
+    // game over
+  } else {
+    var nextQuestion = buildQuestion(questions[questionNumber]);
+    renderQuestionToDOM(nextQuestion);
+  }
+
+
+
+}
+
 function controlStartQuiz() {
   countdownTimer();
-  var questionCard = buildQuestion(questions[0]);
+  var questionCard = buildQuestion(questions[questionNumber]);
   renderQuestionToDOM(questionCard);
 }
 
 start.addEventListener("click", controlStartQuiz);
-next.addEventListener("click", nextQuestion);
+// next.addEventListener("click", nextQuestion);
