@@ -28,8 +28,8 @@ Below are screenshots of my portfolio website.
 
 ![Code Quiz screenshot 1](./assets/images/code_quiz_1.JPG)
 ![Code Quiz screenshot 2](./assets/images/code_quiz_2.JPG)
-![Code Quiz screenshot 3](../challenge-4-code-quiz/assets/images/code_quiz_3.JPG)
-![Code Quiz screenshot 4](../challenge-4-code-quiz/assets/images/code_quiz_4.JPG)
+![Code Quiz screenshot 3](./assets/images/code_quiz_3.JPG)
+![Code Quiz screenshot 4](./assets/images/code_quiz_4.JPG)
 
 ## Credits
 
