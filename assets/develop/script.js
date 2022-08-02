@@ -185,9 +185,11 @@ function handleQuizOver() {
 
     var retrieveScores = localStorage.getItem("localScores");
     console.log("parse: ", JSON.parse(retrieveScores));
-    retrieveScores = JSON.parse(retrieveScores);
+    retrieveScores = retrieveScores === null ? [] : JSON.parse(retrieveScores);
 
-    if (typeof retrieveScores === "object") {
+    console.log(retrieveScores);
+
+    if (typeof retrieveScores === "object" && retrieveScores.length >= 1) {
       localScores = [...retrieveScores];
     }
 
