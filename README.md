@@ -16,7 +16,7 @@ This is a short and fun quiz about JavaScript fundamentals!
 
 ## Deployed Application
 
-https://miss-mad.github.io/code-quiz-deployed/
+https://miss-mad.github.io/code-quiz/
 
 ## Installation
 
