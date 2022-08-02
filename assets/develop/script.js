@@ -187,7 +187,7 @@ function handleQuizOver() {
     console.log("parse: ", JSON.parse(retrieveScores));
     retrieveScores = retrieveScores === null ? [] : JSON.parse(retrieveScores);
 
-    console.log(retrieveScores);
+    console.log("RETRIEVE SCORES: ", retrieveScores);
 
     if (typeof retrieveScores === "object" && retrieveScores.length >= 1) {
       localScores = [...retrieveScores];
