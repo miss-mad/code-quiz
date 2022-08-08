@@ -24,7 +24,7 @@ No installation necessary.
 
 ## Usage
 
-Below are screenshots of my portfolio website.
+Below are screenshots of the code quiz.
 
 ![Code Quiz screenshot 1](./assets/images/code_quiz_1.JPG)
 ![Code Quiz screenshot 2](./assets/images/code_quiz_2.JPG)
