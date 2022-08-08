@@ -36,10 +36,12 @@ Below are screenshots of the code quiz.
 List of resources used:
 
 https://johnpopenuck.wordpress.com/2016/08/23/johns-famous-simple-at-least-28-step-depending-on-circumstances-grilled-cheese-sandwich-recipe/
-https://getbootstrap.com/docs/5.0/layout/containers/#fluid-containers
-https://stackoverflow.com/questions/3486110/make-a-list-item-clickable-html-css
-https://www.w3schools.com/jsref/jsref_parseint.asp
 
+https://getbootstrap.com/docs/5.0/layout/containers/#fluid-containers
+
+https://stackoverflow.com/questions/3486110/make-a-list-item-clickable-html-css
+
+https://www.w3schools.com/jsref/jsref_parseint.asp
 
 ## License
 
